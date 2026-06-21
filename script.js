@@ -22,4 +22,7 @@ form.addEventListener("submit", function(event) {
   count++; 
 
   console.log("Total Check-Ins: ", count);
+
+  // Update progress bar
+  const percentage = Math.round((count / maxCount) * 100) + "%";
 })
