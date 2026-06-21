@@ -33,4 +33,7 @@ form.addEventListener("submit", function(event) {
   // Show success message
   const message = `🎉 Welcome, ${name}! You've been checked in to team ${teamName}.`;
   console.log(message);
+
+  // Reset form
+  form.reset();
 });
