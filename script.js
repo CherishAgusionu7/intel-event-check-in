@@ -12,5 +12,5 @@ form.addEventListener("submit", function(event) {
   const team = teamSelect.value;
   const teamName = teamSelect.selectedOptions[0].text;
 
-  console.log(name, team, teamName);
+  console.log(name, teamName);
 })
