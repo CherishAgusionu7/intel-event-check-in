@@ -1,0 +1,15 @@
+// Get all needed elements
+const form = document.getElementById("checkInForm");
+const nameInput = document.getElementById("attendeeName");
+const teamSelect = document.getElementById("teamSelect");
+
+// Handle form Submission
+form.addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  // Get form values
+  const name = nameInput.value;
+  const team = teamSelect.value;
+
+  console.log(name, team);
+})
