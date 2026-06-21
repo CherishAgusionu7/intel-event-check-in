@@ -31,7 +31,7 @@ form.addEventListener("submit", function(event) {
   teamCounter.textContent = parseInt(teamCounter.textContent) + 1;
 
   // Show success message
-  const message = `🎉 Welcome, ${name}! You've been checked in to team ${teamName}.`;
+  const message = `🎉 Welcome, ${name}! You've been checked in to ${teamName}.`;
   console.log(message);
 
   // Reset form
