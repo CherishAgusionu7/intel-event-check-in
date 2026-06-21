@@ -3,6 +3,10 @@ const form = document.getElementById("checkInForm");
 const nameInput = document.getElementById("attendeeName");
 const teamSelect = document.getElementById("teamSelect");
 
+// Track attendance
+let count = 0;
+const maxCount = 50;
+
 // Handle form Submission
 form.addEventListener("submit", function(event) {
   event.preventDefault();
@@ -13,4 +17,9 @@ form.addEventListener("submit", function(event) {
   const teamName = teamSelect.selectedOptions[0].text;
 
   console.log(name, teamName);
+
+  // Increment count
+  count++; 
+
+  console.log("Total Check-Ins: ", count);
 })
