@@ -29,4 +29,8 @@ form.addEventListener("submit", function(event) {
   // Update Team counter
   const teamCounter = document.getElementById(team + "Count");
   teamCounter.textContent = parseInt(teamCounter.textContent) + 1;
+
+  // Show success message
+  const message = `🎉 Welcome, ${name}! You've been checked in to team ${teamName}.`;
+  console.log(message);
 });
