@@ -59,6 +59,7 @@ form.addEventListener("submit", function (event) {
 
   // Reset form
   form.reset();
+  
   // Focus back to name input for next check-in
   nameInput.focus();
 });
