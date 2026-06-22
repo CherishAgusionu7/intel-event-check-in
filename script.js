@@ -10,6 +10,8 @@ const progressBar = document.getElementById("progressBar");
 let count = 0;
 const maxCount = 50;
 
+const STORAGE_KEY = "intelEventCheckInCounts";
+
 // Handle form Submission
 form.addEventListener("submit", function (event) {
   event.preventDefault();
@@ -39,7 +41,10 @@ form.addEventListener("submit", function (event) {
 
   // Update Team counter
   const teamCounter = document.getElementById(team + "Count");
-  teamCounter.textContent = parseInt(teamCounter.textContent) + 1;
+  teamCounter.textContent = parseInt(teamCounter.textContent || "0") + 1;
+
+  // Persist counts
+  saveCounts();
 
   // Show success message
   const message = `🎉 Welcome, ${name}! You've been checked in to ${teamName}.`;
@@ -59,7 +64,61 @@ form.addEventListener("submit", function (event) {
 
   // Reset form
   form.reset();
-  
+
   // Focus back to name input for next check-in
   nameInput.focus();
+});
+
+function saveCounts() {
+  try {
+    const data = { count: count, teams: {} };
+    for (let i = 0; i < teamSelect.options.length; i++) {
+      const opt = teamSelect.options[i];
+      const el = document.getElementById(opt.value + "Count");
+      data.teams[opt.value] =
+        parseInt(el && el.textContent ? el.textContent : "0") || 0;
+    }
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  } catch (e) {
+    console.warn("Failed to save counts:", e);
+  }
+}
+
+function initializeCounts() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const data = JSON.parse(raw);
+      count = parseInt(data.count) || 0;
+      if (attendeeCountEl) {
+        attendeeCountEl.textContent = count;
+      }
+      const percentage = Math.round((count / maxCount) * 100) + "%";
+      if (progressBar) {
+        progressBar.style.width = percentage;
+      }
+      if (data.teams) {
+        for (let i = 0; i < teamSelect.options.length; i++) {
+          const opt = teamSelect.options[i];
+          const el = document.getElementById(opt.value + "Count");
+          if (el) {
+            el.textContent = parseInt(data.teams[opt.value]) || 0;
+          }
+        }
+      }
+    } else {
+      if (attendeeCountEl) attendeeCountEl.textContent = 0;
+      for (let i = 0; i < teamSelect.options.length; i++) {
+        const opt = teamSelect.options[i];
+        const el = document.getElementById(opt.value + "Count");
+        if (el && !el.textContent) el.textContent = 0;
+      }
+    }
+  } catch (e) {
+    console.warn("Failed to initialize counts:", e);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  initializeCounts();
 });
